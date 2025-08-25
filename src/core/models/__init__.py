@@ -6,6 +6,6 @@ __all__ = (
 )
 
 from .base import Base
-from .cateogory import Category
+from .category import Category
 from .db_helper import db_helper
 from .product import Product
