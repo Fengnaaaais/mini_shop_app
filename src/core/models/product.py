@@ -10,11 +10,11 @@ if TYPE_CHECKING:
     from .category import Category
 
 
-class Product(base):
+class Product(Base):
     title: Mapped[str]
     description: Mapped[str]
 
-    category_id: Mapped[int] = mapped_column(Integer, ForeignKey("cateogry.id"))
+    category_id: Mapped[int] = mapped_column(Integer, ForeignKey("category.id"))
     category: Mapped["Category"] = relationship(back_populates="products")
 
     price: Mapped[int]
