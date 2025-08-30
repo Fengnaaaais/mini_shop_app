@@ -15,7 +15,11 @@ if TYPE_CHECKING:
 
 
 class User(Base, IDColumnMixin, SQLAlchemyBaseUserTable[user_id_type]):
-    products: Mapped[list["Product"]] = relationship("Product", back_populates="user")
+    products: Mapped[list["Product"]] = relationship(
+        "Product",
+        back_populates="user",
+        lazy="selectin",
+    )
 
     @classmethod
     def get_db(cls, session: "AsyncSession"):
