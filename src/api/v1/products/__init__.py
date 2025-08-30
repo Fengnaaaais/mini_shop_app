@@ -1,11 +1,16 @@
-from typing import Annotated
+from typing import Annotated, TYPE_CHECKING
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.models import db_helper
+
 from .crud import get_products, get_product, create_product, update_product
 from .schemas import ProductSchema, ProductCreate, ProductUpdate
+from ..dependencies.authentication.fastapi_users import fastapi_users
+
+if TYPE_CHECKING:
+    from core.models import User
 
 
 router = APIRouter()
@@ -29,12 +34,20 @@ async def get_product_view(
     )
 
 
+current_user = fastapi_users.current_user()
+
+
 @router.post("/create")
 async def create_product_view(
     session: Annotated[AsyncSession, Depends(db_helper.session_dependency)],
     product_in: ProductCreate,
+    user: Annotated["User", Depends(current_user)],
 ) -> ProductSchema:
-    return await create_product(session=session, product_in=product_in)
+    return await create_product(
+        session=session,
+        product_in=product_in,
+        user=user,
+    )
 
 
 @router.patch("/{product_id}")
