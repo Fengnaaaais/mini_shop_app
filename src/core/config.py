@@ -2,6 +2,11 @@ from pydantic import BaseModel
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
+class AccessTokenSettings(BaseModel):
+    token: str
+    lifetime_seconds: int
+
+
 class DBSettings(BaseModel):
     url: str
     echo: bool
@@ -15,6 +20,7 @@ class Settings(BaseSettings):
         env_prefix="API__CONFIG__",
     )
     db: DBSettings
+    access_token: AccessTokenSettings
 
 
 settings = Settings()
