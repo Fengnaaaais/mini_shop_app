@@ -3,8 +3,9 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class AccessTokenSettings(BaseModel):
-    token: str
     lifetime_seconds: int
+    verification_token_secret: str
+    reset_password_token_secret: str
 
 
 class DBSettings(BaseModel):
