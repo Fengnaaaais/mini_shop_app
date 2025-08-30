@@ -2,6 +2,7 @@ from fastapi import APIRouter
 
 from .products import router as products_router
 from .categories import router as categories_router
+from .users import router as users_router
 
 
 router = APIRouter()
@@ -9,3 +10,4 @@ router = APIRouter()
 
 router.include_router(products_router, prefix="/products", tags=["Products"])
 router.include_router(categories_router, prefix="/categories", tags=["Categories"])
+router.include_router(users_router, prefix="/auth", tags=["Users"])
